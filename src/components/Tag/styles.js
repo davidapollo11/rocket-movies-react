@@ -5,7 +5,7 @@ export const Container = styled.span`
   font-size: 12px;
 
   color: ${({ theme }) => theme.COLORS.WHITE};
-  background-color: ${({ theme }) => theme.COLORS.PINK_100};
+  background-color: ${({ theme, isHome }) => isHome ? theme.COLORS.BACKGROUND_700 : theme.COLORS.PINK_100};
 
   padding: 8px 16px;
 
