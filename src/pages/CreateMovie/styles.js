@@ -24,7 +24,7 @@ export const Container = styled.div`
     margin: 40px auto 56px;
     padding: 0 16px;
 
-    > button:nth-child(1) {
+    button:nth-child(1) {
       align-self: flex-start;
       margin-bottom: 24px;
     }

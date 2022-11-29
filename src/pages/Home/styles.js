@@ -19,7 +19,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
 
-    > button {
+    button {
       width: 207px;
       height: 48px;
     }

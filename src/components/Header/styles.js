@@ -27,7 +27,7 @@ export const Profile = styled.div`
   justify-content: center;
 
 
-  > img {
+  img {
     width: 64px;
     height: 64px;
 

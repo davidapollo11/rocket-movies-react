@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { FiMail, FiLock, FiArrowLeft, FiUser } from 'react-icons/fi'
 
 import { Button } from '../../components/Button'
@@ -18,12 +20,14 @@ export function SignUp() {
         <div>
           <Input className='input' type='text' icon={FiUser} placeholder='Nome' />
           <Input className='input' type='email' icon={FiMail} placeholder='E-mail' />
-          <Input className='input' type='password' icon={FiLock} placeholder='E-mail' />
+          <Input className='input' type='password' icon={FiLock} placeholder='Senha' />
         </div>
 
         <Button title='Cadastrar' />
 
-        <ButtonText className='toLogin' title='Voltar para o login' icon={FiArrowLeft} />
+        <Link to='/'>
+          <ButtonText className='toLogin' title='Voltar para o login' icon={FiArrowLeft} />
+        </Link>
       </Form>
 
       <Background />

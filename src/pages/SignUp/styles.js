@@ -44,8 +44,11 @@ export const Form = styled.form`
     margin-bottom: 24px;
   }
 
-  > .toLogin {
+  > a {
     margin-top: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `
 

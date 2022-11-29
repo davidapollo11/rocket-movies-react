@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Container, Profile } from './styles'
 import { Input } from '../Input'
 
@@ -13,7 +15,9 @@ export function Header() {
           <button>sair</button>
         </div>
 
-        <img src="https://github.com/davidapollo11.png" alt="Imagem do usuário" />
+        <Link to='/profile'>
+          <img src="https://github.com/davidapollo11.png" alt="Imagem do usuário" />
+        </Link>
       </Profile>
     </Container>
   )

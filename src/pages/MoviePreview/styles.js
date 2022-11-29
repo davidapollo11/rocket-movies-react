@@ -31,7 +31,7 @@ export const Container = styled.div`
 
       h1{
         margin-right: 19px;
-        font-weight: 400;
+        font-weight: 500;
       }
 
       svg {

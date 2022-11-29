@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi'
 
 import { ButtonText } from '../../components/ButtonText'
@@ -10,7 +12,9 @@ export function Profile() {
   return (
     <Container>
       <header>
-        <ButtonText title='Voltar' icon={FiArrowLeft} />
+        <Link to='/'>
+          <ButtonText title='Voltar' icon={FiArrowLeft} />
+        </Link>
       </header>
 
       <Form>
