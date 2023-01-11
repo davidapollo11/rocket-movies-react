@@ -26,11 +26,10 @@ export const Container = styled.div`
 
     button:nth-child(1) {
       align-self: flex-start;
-      margin-bottom: 24px;
     }
 
     > h1 {
-      margin-bottom: 40px;
+      margin: 24px 0px;
     }
 
     > div:nth-child(3) {
