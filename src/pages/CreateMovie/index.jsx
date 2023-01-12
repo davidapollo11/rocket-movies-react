@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { FiArrowLeft } from 'react-icons/fi'
@@ -12,6 +13,18 @@ import { MovieItem } from '../../components/MovieItem'
 import { Container, Textarea } from './styles'
 
 export function CreateMovie() {
+  const [tags, setTags] = useState([])
+  const [newTag, setNewTag] = useState('')
+
+  function handleAddTag() {
+    setTags(prevState => [...prevState, newTag])
+    setNewTag('')
+  }
+
+  function handleRemoveTag(deleted) {
+    setTags(prevState => prevState.filter(tag => tag !== deleted))
+  }
+
   return (
     <Container>
       <Header />
@@ -28,8 +41,22 @@ export function CreateMovie() {
         <Textarea placeholder='Observações' />
         <Section title='Marcadores'>
           <div className='bookmarks'>
-            <MovieItem value='Ficção' />
-            <MovieItem isNew placeholder='Novo Marcador' />
+            {
+              tags.map((tag, index) => (
+                <MovieItem
+                  key={String(index)}
+                  value={tag}
+                  onClick={() => handleRemoveTag(tag)}
+                />
+              ))
+            }
+            <MovieItem
+              isNew
+              placeholder='Novo Marcador'
+              value={newTag}
+              onChange={e => setNewTag(e.target.value)}
+              onClick={handleAddTag}
+            />
           </div>
         </Section>
         <div>
