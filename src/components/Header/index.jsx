@@ -11,27 +11,27 @@ import { Container, Profile } from './styles'
 import { Input } from '../Input'
 
 export function Header() {
-  const [textSearch, setTextSearch] = useState('')
+  const [pageHome, setPageHome] = useState(false)
 
   const { user, signOut } = useAuth()
   const { valueSearch } = useSearch()
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
-  function handleInput() {
-    if (valueSearch) {
-      return <Input placeholder='Pesquisar pelo título' onChange={e => setTextSearch(e.target.value)} />
+  function isPageHome() {
+    if (window.location.pathname == '/') {
+      setPageHome(true)
     }
   }
 
   useEffect(() => {
-    valueSearch(textSearch)
-  }, [textSearch])
+    isPageHome()
+  }, [])
 
   return (
     <Container>
       <h1>RocketMovies</h1>
-      {handleInput()}
+      <Input readOnly={!pageHome} placeholder='Pesquisar pelo título' onChange={e => valueSearch(e.target.value)} />
 
       <Profile>
         <div>

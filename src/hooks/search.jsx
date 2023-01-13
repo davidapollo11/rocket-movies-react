@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 export const SearchContext = createContext({})
 
@@ -8,6 +8,10 @@ function SearchProvider({ children }) {
   function valueSearch(text) {
     setTextSearch(text)
   }
+
+  useEffect(() => {
+    valueSearch(textSearch)
+  }, [textSearch])
 
   return (
     <SearchContext.Provider value={{
