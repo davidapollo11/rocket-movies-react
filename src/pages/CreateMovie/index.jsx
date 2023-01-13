@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { api } from '../../services/api'
 
 import { FiArrowLeft } from 'react-icons/fi'
 
@@ -13,8 +15,14 @@ import { MovieItem } from '../../components/MovieItem'
 import { Container, Textarea } from './styles'
 
 export function CreateMovie() {
+  const [title, setTitle] = useState('')
+  const [rating, setRating] = useState()
+  const [description, setDescription] = useState('')
+
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState('')
+
+  const navigate = useNavigate()
 
   function handleAddTag() {
     setTags(prevState => [...prevState, newTag])
@@ -23,6 +31,38 @@ export function CreateMovie() {
 
   function handleRemoveTag(deleted) {
     setTags(prevState => prevState.filter(tag => tag !== deleted))
+  }
+
+  async function handleNewNote() {
+    if (!title) {
+      return alert('Adicione o nome do filme!')
+    }
+
+    if (!rating) {
+      return alert('Dê uma nota ao filme!')
+    }
+
+    if (rating < 0 || rating > 5) {
+      return alert('A nota do filme deve estar entre 0 e 5!')
+    }
+
+    if (newTag) {
+      return alert('Há uma tag a ser adicionada, adicione-a ou esvazie o campo!')
+    }
+
+    if (tags.length == 0) {
+      return alert('Você deve adicionar pelo menos uma tag')
+    }
+
+    await api.post('/notes', {
+      title,
+      description,
+      rating,
+      tags
+    })
+
+    alert('Filme adicionado com sucesso!')
+    navigate('/')
   }
 
   return (
@@ -36,9 +76,10 @@ export function CreateMovie() {
 
         <h1>Novo filme</h1>
         <div>
-          <Input placeholder='Título' /><Input placeholder='Sua nota (de 0 a 5)' />
+          <Input placeholder='Título' onChange={e => setTitle(e.target.value)} />
+          <Input placeholder='Sua nota (de 0 a 5)' onChange={e => setRating(e.target.value)} />
         </div>
-        <Textarea placeholder='Observações' />
+        <Textarea placeholder='Observações' onChange={e => setDescription(e.target.value)} />
         <Section title='Marcadores'>
           <div className='bookmarks'>
             {
@@ -61,7 +102,7 @@ export function CreateMovie() {
         </Section>
         <div>
           <Button isDelete title='Excluir' />
-          <Button title='Salvar alterações' />
+          <Button title='Salvar alterações' onClick={handleNewNote} />
         </div>
       </main>
     </Container>
