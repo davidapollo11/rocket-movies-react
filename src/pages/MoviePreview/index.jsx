@@ -1,3 +1,11 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import { api } from '../../services/api'
+import { useAuth } from '../../hooks/auth'
+
+import avatarPlaceholder from '../../assets/avatarPlaceholder.svg'
+
 import { FiArrowLeft, FiClock } from 'react-icons/fi'
 import { Header } from '../../components/Header'
 import { ButtonText } from '../../components/ButtonText'
@@ -7,34 +15,58 @@ import { Tag } from '../../components/Tag'
 import { Container } from './styles'
 
 export function MoviePreview() {
+  const [data, setData] = useState(null)
+
+  const { user } = useAuth()
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+
+  const params = useParams()
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate('/')
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`)
+      setData(response.data)
+    }
+
+    fetchNote()
+  }, [])
   return (
     <Container>
       <Header />
 
-      <main>
-        <ButtonText title='Voltar' icon={FiArrowLeft} />
+      {data &&
+        <main>
+          <ButtonText title='Voltar' icon={FiArrowLeft} onClick={handleBack} />
 
-        <div>
-          <h1>Interestellar</h1>
-          <Stars rating={2} />
-        </div>
+          <div>
+            <h1>{data.title}</h1>
+            <Stars rating={data.rating} />
+          </div>
 
-        <div>
-          <img src="https://github.com/davidapollo11.png" alt="" />
-          Por David Apollo
+          <div>
+            <img src={avatarUrl} alt={`Foto do usuário ${user.name}`} />
+            Por {user.name}
 
-          <FiClock /> 23/05/22 às 08:00
-        </div>
+            <FiClock /> {data.created_at}
+          </div>
 
-        <div>
-          <Tag title='Ficção Científica' />
-          <Tag title='Drama' />
-          <Tag title='Família' />
-        </div>
+          <div>
+            {
+              data.tags && data.tags.map(tag => (
+                <Tag key={String(tag.id)} title={tag.name} />
+              ))
+            }
+          </div>
 
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure inventore officia nemo quam debitis facere sed eligendi nihil adipisci amet eum beatae vitae, deserunt voluptatum iste, alias sunt voluptate temporibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quisquam nesciunt aut accusantium sed, adipisci, provident nulla saepe voluptatem nemo mollitia voluptas? A cumque accusamus ea deleniti voluptas neque nesciunt! Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum alias cum ipsam voluptatibus, nostrum nulla doloribus amet modi nihil veniam totam a est mollitia nisi iusto voluptas, distinctio architecto! Obcaecati. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure inventore officia nemo quam debitis facere sed eligendi nihil adipisci amet eum beatae vitae, deserunt voluptatum iste, alias sunt voluptate temporibus. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
-      </main>
+          <p>{data.description}</p>
+        </main>
+      }
     </Container>
   )
 }

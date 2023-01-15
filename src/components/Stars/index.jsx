@@ -5,7 +5,7 @@ export function Stars({ rating }) {
   const stars = []
 
   for (let i = 0; i < 5; i++) {
-    let star = i < rating ? <AiFillStar /> : <AiOutlineStar />
+    let star = i < rating ? <AiFillStar key={String(i)} /> : <AiOutlineStar key={String(i)} />
     stars.push(star)
   }
 

@@ -39,7 +39,9 @@ export function Home() {
       <main>
         {
           notes.map(note => (
-            <Movie key={note.id} data={note} />
+            <Link to={`/preview/${note.id}`}>
+              <Movie key={note.id} data={note} />
+            </Link>
           ))
         }
       </main>

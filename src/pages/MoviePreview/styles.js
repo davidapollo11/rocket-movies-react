@@ -18,7 +18,7 @@ export const Container = styled.div`
   }
 
   > main {
-    max-width: 1130px;
+    width: 1130px;
     margin: 40px auto 56px;
     padding: 0 16px;
     grid-area: content;
