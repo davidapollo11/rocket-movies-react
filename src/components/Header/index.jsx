@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../hooks/auth'
 import { useSearch } from '../../hooks/search'
@@ -16,12 +16,19 @@ export function Header() {
   const { user, signOut } = useAuth()
   const { valueSearch } = useSearch()
 
+  const navigate = useNavigate()
+
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
   function isPageHome() {
     if (window.location.pathname == '/') {
       setPageHome(true)
     }
+  }
+
+  function handleSignOut() {
+    navigate('/')
+    signOut()
   }
 
   useEffect(() => {
@@ -36,7 +43,7 @@ export function Header() {
       <Profile>
         <div>
           <strong>{user.name}</strong>
-          <button onClick={signOut}>sair</button>
+          <button onClick={handleSignOut}>sair</button>
         </div>
 
         <Link to='/profile'>
