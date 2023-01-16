@@ -27,20 +27,20 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function updateProfile({ user, avatarFile }) {
+  async function updateProfile({ userUpdated, avatarFile }) {
     try {
       if (avatarFile) {
         const fileUploadForm = new FormData()
         fileUploadForm.append('avatar', avatarFile)
 
         const response = await api.patch('/users/avatar', fileUploadForm)
-        user.avatar = response.data.avatar
+        userUpdated.avatar = response.data.avatar
       }
 
-      await api.put('/users', user)
-      localStorage.setItem('@rocketmovies:user', JSON.stringify(user))
+      await api.put('/users', userUpdated)
+      localStorage.setItem('@rocketmovies:user', JSON.stringify(userUpdated))
 
-      setData({ user, token: data.token })
+      setData({ user: userUpdated, token: data.token })
 
       alert('Perfil atualizado com sucesso!')
     } catch (error) {
