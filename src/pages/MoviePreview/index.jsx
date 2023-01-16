@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/auth'
 
 import avatarPlaceholder from '../../assets/avatarPlaceholder.svg'
 
-import { FiArrowLeft, FiClock } from 'react-icons/fi'
+import { FiArrowLeft, FiClock, FiTrash2 } from 'react-icons/fi'
 import { Header } from '../../components/Header'
 import { ButtonText } from '../../components/ButtonText'
 import { Stars } from '../../components/Stars'
@@ -28,6 +28,15 @@ export function MoviePreview() {
     navigate('/')
   }
 
+  async function handleRemove() {
+    const confirmDel = confirm('Tem certeza que deseja apagar a nota?')
+
+    if (confirmDel) {
+      await api.delete(`/notes/${params.id}`)
+      navigate('/')
+    }
+  }
+
   useEffect(() => {
     async function fetchNote() {
       const response = await api.get(`/notes/${params.id}`)
@@ -42,7 +51,10 @@ export function MoviePreview() {
 
       {data &&
         <main>
-          <ButtonText title='Voltar' icon={FiArrowLeft} onClick={handleBack} />
+          <div className="buttons">
+            <ButtonText title='Voltar' icon={FiArrowLeft} onClick={handleBack} />
+            <ButtonText title='Excluir' icon={FiTrash2} onClick={handleRemove} />
+          </div>
 
           <div>
             <h1>{data.title}</h1>

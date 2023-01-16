@@ -47,5 +47,9 @@ export const Container = styled.div`
 
     padding-right:16px;
   }
+
+  p {
+    text-align: justify;
+  }
   
 `

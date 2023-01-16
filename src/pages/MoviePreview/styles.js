@@ -24,6 +24,11 @@ export const Container = styled.div`
     grid-area: content;
     overflow-y: scroll;
 
+    > .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
     > div:nth-child(2) {
       display: flex;
       align-items: center;

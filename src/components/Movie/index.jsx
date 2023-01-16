@@ -5,7 +5,7 @@ import { Container } from './styles'
 
 export function Movie({ data, ...rest }) {
   const element = String(data.description)
-  const LIMIT = 280
+  const LIMIT = 275
   const aboveLimit = element.length > LIMIT
   const dotsOrEmpty = aboveLimit ? '...' : ''
 
