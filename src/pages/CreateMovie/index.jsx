@@ -33,6 +33,21 @@ export function CreateMovie() {
     setTags(prevState => prevState.filter(tag => tag !== deleted))
   }
 
+  function handleClear() {
+    setTitle('')
+    setRating('')
+    setDescription('')
+    setTags([])
+
+    document.querySelectorAll('input').forEach(
+      input => (input.value = '')
+    )
+
+    document.querySelectorAll('textarea').forEach(
+      textarea => (textarea.value = '')
+    )
+  }
+
   async function handleNewNote() {
     if (!title) {
       return alert('Adicione o nome do filme!')
@@ -101,7 +116,7 @@ export function CreateMovie() {
           </div>
         </Section>
         <div>
-          <Button isDelete title='Excluir' />
+          <Button isDelete title='Limpar tudo' onClick={handleClear} />
           <Button title='Salvar alterações' onClick={handleNewNote} />
         </div>
       </main>
