@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api'
@@ -27,6 +27,12 @@ export function Profile() {
   const [avatar, setAvatar] = useState(avatarUrl)
   const [avatarFile, setAvatarFile] = useState(null)
 
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate(-1)
+  }
+
   async function handleUpdate() {
     const user = {
       name,
@@ -36,6 +42,7 @@ export function Profile() {
     }
 
     await updateProfile({ user, avatarFile })
+    navigate(-1)
   }
 
   function handleChangeAvatar(event) {
@@ -49,9 +56,7 @@ export function Profile() {
   return (
     <Container>
       <header>
-        <Link to='/'>
-          <ButtonText title='Voltar' icon={FiArrowLeft} />
-        </Link>
+        <ButtonText title='Voltar' icon={FiArrowLeft} onClick={handleBack} />
       </header>
 
       <Form>
